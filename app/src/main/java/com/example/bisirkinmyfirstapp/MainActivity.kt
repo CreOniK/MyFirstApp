@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.bisirkinmyfirstapp.databinding.ActivityMainBinding
 import com.example.bisirkinmyfirstapp.dto.Post
+import com.example.bisirkinmyfirstapp.util.formatCount
 import java.text.DecimalFormat
 
 // Исправление: объявляем Post как data class
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                     "Принцип:Суперпозиция представляет собой сумму (наложение) всех возможных состояний, в которых может находиться система. Математически состояние такой системы описывается волновой функцией, которая содержит в себе всю информацию о системе. ",
             published = "21 мая в 18:36",
             likedByMe = false,
-            likes = 999,
+            likes = 1300000,
             shares = 25,
             views = 5700
         )
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             // Лайк
             like.setOnClickListener {
+                println("CLICK: Изменение Like")
                 // Изменяем состояние лайка
                 post = post.copy(
                     likedByMe = !post.likedByMe,
@@ -102,6 +104,7 @@ class MainActivity : AppCompatActivity() {
 
             // Репост
             share.setOnClickListener {
+                println("CLICK: Репост +1")
                 // Увеличиваем количество репостов
                 post = post.copy(shares = post.shares + 1)
 
@@ -113,11 +116,13 @@ class MainActivity : AppCompatActivity() {
 
             // Меню
             menu.setOnClickListener {
+                println("CLICK:  layout Меню")
                 Toast.makeText(this@MainActivity, "Меню поста", Toast.LENGTH_SHORT).show()
             }
 
             // Аватарка
             avatar.setOnClickListener {
+                println("CLICK: layout автора")
                 Toast.makeText(this@MainActivity, "Профиль автора", Toast.LENGTH_SHORT).show()
             }
 
@@ -126,31 +131,13 @@ class MainActivity : AppCompatActivity() {
                 println("CLICK: корневой layout")
                 Toast.makeText(this@MainActivity, "Клик по фону", Toast.LENGTH_SHORT).show()
             }
+            // Меню
+            content.setOnClickListener {
+                println("CLICK: Текст поста")
+                Toast.makeText(this@MainActivity, "Текст поста", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun formatCount(count: Int): String {
-        return when {
-            count >= 1_000_000 -> {
-                val millions = count / 1_000_000.0
-                if (millions % 1.0 == 0.0) {
-                    "${millions.toInt()}M"
-                } else {
-                    DecimalFormat("#.#").format(millions) + "M"
-                }
-            }
-            count >= 10_000 -> {
-                "${count / 1000}K"
-            }
-            count >= 1_000 -> {
-                val thousands = count / 1000.0
-                if (thousands % 1.0 == 0.0) {
-                    "${thousands.toInt()}K"
-                } else {
-                    DecimalFormat("#.#").format(thousands) + "K"
-                }
-            }
-            else -> count.toString()
-        }
-    }
+
 }
