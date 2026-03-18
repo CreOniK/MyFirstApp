@@ -8,6 +8,11 @@ android {
         version = release(36) {
             minorApiLevel = 1
         }
+        buildFeatures {
+            viewBinding = true
+        }
+
+
     }
 
     defaultConfig {
@@ -41,6 +46,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.room3.runtime)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
