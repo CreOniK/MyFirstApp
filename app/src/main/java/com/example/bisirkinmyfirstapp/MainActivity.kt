@@ -9,52 +9,33 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.bisirkinmyfirstapp.databinding.ActivityMainBinding
 import com.example.bisirkinmyfirstapp.dto.Post
 import com.example.bisirkinmyfirstapp.util.formatCount
+import com.example.bisirkinmyfirstapp.viewmodel.PostViewModel
 import java.text.DecimalFormat
 
-// Исправление: объявляем Post как data class
-data class Post(
-    val id: Long,
-    val author: String,
-    val content: String,
-    val published: String,
-    val likedByMe: Boolean,
-    val likes: Int,
-    val shares: Int,
-    val views: Int
-)
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var post: Post
+
+    // Делегирование создания ViewModel
+    private val viewModel: PostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        println("Activity: onCreate")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Создаем экземпляр Post
-        post = Post(
-            id = 1,
-            author = "Квантовая суперпозиция. Университет Квантовых взаимоотношений",
-            content = "Квантовая суперпозиция — это состояние, при котором частица (например, электрон) может находиться в нескольких состояниях одновременно, пока на неё не воздействуют измерением. Другими словами, частица существует сразу во всех возможных вариантах, которые «схлопываются» в один определённый результат только при наблюдении.\n" +
-                    "Это явление — одно из ключевых отличий квантового мира от классического, где объект может находиться только в одном состоянии в данный момент времени.\n" +
-                    "Принцип:Суперпозиция представляет собой сумму (наложение) всех возможных состояний, в которых может находиться система. Математически состояние такой системы описывается волновой функцией, которая содержит в себе всю информацию о системе. ",
-            published = "21 мая в 18:36",
-            likedByMe = false,
-            likes = 1300000,
-            shares = 25,
-            views = 5700
-        )
+        // Подписываемся на изменения данных
+        viewModel.data.observe(this) { post ->
+            // Этот код будет выполняться каждый раз, когда данные изменяются
+            bindPost(post)
+        }
 
-        // Отображаем данные на экране
-        bindPost(post)
-
-        // Настраиваем обработчики кликов
         setupClickListeners()
     }
 
@@ -64,55 +45,38 @@ class MainActivity : AppCompatActivity() {
             published.text = post.published
             content.text = post.content
 
-            // Форматируем счётчики
+            // Форматируем и отображаем счетчики
             likeCount.text = formatCount(post.likes)
             shareCount.text = formatCount(post.shares)
             viewsCount.text = formatCount(post.views)
 
-            // Ставим соответствующую иконку лайка
+            // Устанавливаем иконку лайка в зависимости от состояния
             if (post.likedByMe) {
                 like.setImageResource(R.drawable.ic_like_filled)
             } else {
                 like.setImageResource(R.drawable.ic_like_border)
             }
 
-            // Заполняем ссылку (если есть)
-            linkTitle.text = "Исследования кварков: 4 уровня мира"
-            linkUrl.text = "Fisik.ru"
+            // Пример с ссылкой
+            linkTitle.text = "Новая Нетология: 4 уровня карьеры"
+            linkUrl.text = "netology.ru"
         }
     }
 
     private fun setupClickListeners() {
         binding.apply {
-            // Лайк
+            // Обработка лайка - вызываем метод ViewModel
             like.setOnClickListener {
-                println("CLICK: Изменение Like")
-                // Изменяем состояние лайка
-                post = post.copy(
-                    likedByMe = !post.likedByMe,
-                    likes = if (post.likedByMe) post.likes - 1 else post.likes + 1
-                )
-
-                // Перерисовываем пост
-                bindPost(post)
-
-                // Подсказка
-                Toast.makeText(this@MainActivity,
-                    if (post.likedByMe) "Лайк поставлен" else "Лайк убран",
-                    Toast.LENGTH_SHORT).show()
+                viewModel.like()
+                Toast.makeText(this@MainActivity, "Лайк", Toast.LENGTH_SHORT).show()
             }
 
-            // Репост
+            // Обработка репоста - вызываем метод ViewModel
             share.setOnClickListener {
-                println("CLICK: Репост +1")
-                // Увеличиваем количество репостов
-                post = post.copy(shares = post.shares + 1)
-
-                // Обновляем интерфейс
-                bindPost(post)
-
+                viewModel.share()
                 Toast.makeText(this@MainActivity, "Репост +1", Toast.LENGTH_SHORT).show()
             }
+
 
             // Меню
             menu.setOnClickListener {
@@ -138,6 +102,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    override fun onStart() {
+        super.onStart()
+        println("Activity: onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("Activity: onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        println("Activity: onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("Activity: onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("Activity: onDestroy")
+    }
+
 
 
 }

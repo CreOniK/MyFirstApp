@@ -2,6 +2,7 @@ package com.example.bisirkinmyfirstapp.util
 
 import java.text.DecimalFormat
 
+
 fun formatCount(count: Int): String {
         return when {
             count >= 1_000_000 -> {

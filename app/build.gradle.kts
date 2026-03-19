@@ -11,11 +11,12 @@ android {
         buildFeatures {
             viewBinding = true
         }
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
 
-
-    }
-
-    defaultConfig {
+        defaultConfig {
         applicationId = "com.example.bisirkinmyfirstapp"
         minSdk = 24
         targetSdk = 36
@@ -40,6 +41,7 @@ android {
     }
 }
 
+//noinspection WrongGradleMethod
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -51,4 +53,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    //noinspection UseTomlInstead
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
+    //noinspection UseTomlInstead
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
+    //noinspection UseTomlInstead
+    implementation("androidx.activity:activity-ktx:1.13.0")
+
+    }
 }
