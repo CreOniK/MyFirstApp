@@ -1,27 +1,57 @@
 package com.example.bisirkinmyfirstapp.viewmodel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bisirkinmyfirstapp.dto.Post
 import com.example.bisirkinmyfirstapp.repository.PostRepository
 import com.example.bisirkinmyfirstapp.repository.PostRepositoryInMemoryImpl
 
 class PostViewModel : ViewModel() {
-    init {
-        println("ViewModel: created")
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        println("ViewModel: cleared")
-    }
-    // Создаем экземпляр репозитория
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
+    private val empty = Post(
+        id = 0,
+        author = "",
+        content = "",
+        published = ""
+    )
+    val data: LiveData<List<Post>> = repository.getAll()
+    private val _edited = MutableLiveData(empty)
+    val edited: LiveData<Post> = _edited
 
-    // Данные, доступные для наблюдения
-    val data: LiveData<Post> = repository.get()
+    // Флаг, показываем ли панель отмены
+    private val _editingMode = MutableLiveData(false)
+    val editingMode: LiveData<Boolean> = _editingMode
+    fun likeById(id: Long) = repository.likeById(id)
+    fun shareById(id: Long) = repository.shareById(id)
+    fun increaseViews(id: Long) = repository.increaseViews(id)
+    fun removeById(id: Long) = repository.removeById(id)
+    fun save() {
+        _edited.value?.let { post ->
+            if (post.content.isNotBlank()) {
+                repository.save(post)
+            }
+        }
+        // Сбрасываем режим редактирования
+        _edited.value = empty
+        _editingMode.value = false
+    }
+    fun edit(post: Post) {
+        _edited.value = post
+        _editingMode.value = true
+    }
+    fun changeContent(content: String) {
+        val text = content.trim()
+        _edited.value?.let { post ->
+            if (post.content != text) {
+                _edited.value = post.copy(content = text)
+            }
+        }
+    }
 
-    // Методы для вызова из Activity
-    fun like() = repository.like()
-    fun share() = repository.share()
-    fun increaseViews() = repository.increaseViews()
+    fun cancelEdit() {
+        _edited.value = empty
+        _editingMode.value = false
+    }
 }
+
+

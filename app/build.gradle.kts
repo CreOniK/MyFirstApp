@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
     //noinspection UseTomlInstead
     implementation("androidx.activity:activity-ktx:1.13.0")
-
+    //noinspection UseTomlInstead
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     }
 }
