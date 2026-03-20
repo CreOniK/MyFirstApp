@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                 like.setImageResource(R.drawable.ic_like_border)
             }
 
-            // Пример с ссылкой
             linkTitle.text = "Новая Нетология: 4 уровня карьеры"
             linkUrl.text = "netology.ru"
         }
