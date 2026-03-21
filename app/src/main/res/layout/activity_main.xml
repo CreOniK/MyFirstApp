@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <!-- Список постов -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -15,14 +17,28 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/editBarrier"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/card_post" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="60dp"
+        android:layout_height="69dp"
+        android:layout_marginRight="40dp"
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="@string/add_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <!-- Барьер, разделяющий список и панель ввода -->
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/editBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="top" />
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="cancelBlock,content,save" />
 
     <!-- Панель отмены редактирования (изначально скрыта) -->
     <androidx.constraintlayout.widget.Group
@@ -40,7 +56,7 @@
         android:padding="8dp"
         android:background="#F0F0F0"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/textInputLayout"
+        app:layout_constraintBottom_toTopOf="@id/content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -63,29 +79,30 @@
 
     <!-- Поле ввода текста -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/post_hint"
+        android:inputType="textMultiLine"
+        android:maxLines="4"
+        android:padding="12dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/save"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/content"
+            android:id="@+id/contentEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/post_hint"
-            android:inputType="textMultiLine"
-            android:maxLines="4"
-            android:background="?attr/colorSurface"
-            android:textColorHint="?attr/colorOnSurfaceVariant" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-    <!-- Кнопка сохранения -->
+    <!-- Кнопка сохрана -->
     <ImageButton
         android:id="@+id/save"
         android:layout_width="48dp"

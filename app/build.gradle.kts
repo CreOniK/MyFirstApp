@@ -53,16 +53,22 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //noinspection UseTomlInstead
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
-    //noinspection UseTomlInstead
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
-    //noinspection UseTomlInstead
-    implementation("androidx.activity:activity-ktx:1.13.0")
-    //noinspection GradleDependency,UseTomlInstead
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.androidx.recyclerview)
     //noinspection GradleDependency,UseTomlInstead
     implementation("com.google.android.material:material:1.9.0")
-
-    }
+    implementation(libs.androidx.activity.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation("androidx.activity:activity-ktx:1.8.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.0")
+    //noinspection UseTomlInstead,NewerVersionAvailable
+    implementation("com.google.code.gson:gson:2.10.1")
+}
+}
+dependencies {
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout.v214)
 }
