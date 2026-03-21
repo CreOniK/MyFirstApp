@@ -1,6 +1,4 @@
 package com.example.bisirkinmyfirstapp
-import android.annotation.SuppressLint
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -91,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             // Очищаем поле ввода и скрываем компоненты
             binding.textInputLayout.editText?.text?.clear()
             binding.cancelGroup.visibility = View.GONE
+
 
             // Скрываем клавиатуру. Важно передать поле ввода (EditText) внутрь контейнера.
             hideKeyboard(binding.textInputLayout.editText ?: return@setOnClickListener)
