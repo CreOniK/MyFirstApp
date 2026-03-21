@@ -54,6 +54,7 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
     <style name="MaterialOutlinedTextField" parent="">
         <item name="iconTint">@color/gray_600</item>
         <item name="android:minWidth">48dp</item>

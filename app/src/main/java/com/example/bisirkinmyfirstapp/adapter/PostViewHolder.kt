@@ -1,15 +1,27 @@
 package com.example.bisirkinmyfirstapp.adapter
 
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bisirkinmyfirstapp.databinding.CardPostBinding
 import com.example.bisirkinmyfirstapp.dto.Post
 import java.text.DecimalFormat
 import com.example.bisirkinmyfirstapp.R
 import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
+import com.example.bisirkinmyfirstapp.databinding.ItemVideoBinding
+import kotlin.collections.remove
+import androidx.core.net.toUri
+
+
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val listener: OnPostInteractionListener
+    private val listener: OnPostInteractionListener,
+
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
@@ -18,30 +30,69 @@ class PostViewHolder(
             published.text = post.published
             content.text = post.content
 
-            // Для кнопки лайка используем isChecked и текст
             like.isChecked = post.likedByMe
             like.text = formatCount(post.likes)
-
-            // Для репоста и просмотров - только текст
             share.text = formatCount(post.shares)
             views.text = formatCount(post.views)
 
+            // Обработка видео
+            if (post.video.isNullOrBlank()) {
+                // Если видео нет, скрываем контейнер
+                videoContainer.removeAllViews()
+                videoContainer.visibility = View.GONE
+            } else {
+                // Если видео есть, показываем контейнер и наполняем его
+                videoContainer.visibility = View.VISIBLE
+                videoContainer.removeAllViews()
+
+                // Инфлейтим layout видео
+                val videoBinding = ItemVideoBinding.inflate(LayoutInflater.from(itemView.context), videoContainer, true)
+
+                // Устанавливаем текст видео (можно показать короткую ссылку)
+                videoBinding.videoUrl.text = post.video
+
+                // Обработка клика на весь блок видео
+                videoContainer.setOnClickListener {
+                    openVideo(post.video!!)
+                }
+            }
+
             // Обработчики кликов
-            like.setOnClickListener {
-                listener.onLike(post)
-            }
+            like.setOnClickListener { listener.onLike(post) }
+            share.setOnClickListener { listener.onShare(post) }
+            avatar.setOnClickListener { listener.onAvatarClick(post) }
 
-            share.setOnClickListener {
-                listener.onShare(post)
-            }
-
-            avatar.setOnClickListener {
-                listener.onAvatarClick(post)
-            }
-
+            // Кнопка меню
             menu.setOnClickListener { view ->
                 showPopupMenu(view, post)
             }
+        }
+    }
+
+
+    private fun openVideo(videoUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW, videoUrl.toUri())
+
+        // Получаем список приложений, которые могут обработать Intent
+        val packageManager = itemView.context.packageManager
+        val activities = packageManager.queryIntentActivities(intent, 0)
+
+        // Логируем результат
+        Log.d("VideoIntent", "queryIntentActivities: $activities")
+
+        val resolveInfo = intent.resolveActivity(packageManager)
+        Log.d("VideoIntent", "resolveActivity: $resolveInfo")
+
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl))
+            // Проверяем, есть ли приложение, которое может обработать этот Intent
+            if (intent.resolveActivity(itemView.context.packageManager) != null) {
+                itemView.context.startActivity(intent)
+            } else {
+                Toast.makeText(itemView.context, R.string.error_no_video_app, Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(itemView.context, R.string.error_cannot_open_video, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -67,6 +118,7 @@ class PostViewHolder(
             show()
         }
     }
+
     private fun formatCount(count: Int): String {
         return when {
             count >= 1_000_000 -> {

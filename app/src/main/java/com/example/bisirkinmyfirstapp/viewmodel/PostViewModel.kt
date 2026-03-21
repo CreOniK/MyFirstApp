@@ -59,10 +59,10 @@ class PostViewModel : ViewModel() {
         // Создаем обновленный пост с новым контентом
         val updatedPost = existingPost.copy(content = newContent)
 
-        // Сохраняем через репозиторий
+        // Сохраняем через репозиторий.
         repository.save(updatedPost)
 
-        // Сбрасываем режим редактирования
+        // Сбрасываем режим редактирования.
         _edited.value = empty
         _editingMode.value = false
     }
