@@ -22,8 +22,7 @@
         android:id="@+id/editBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="cancelBlock,content,save" />
+        app:barrierDirection="top" />
 
     <!-- Панель отмены редактирования (изначально скрыта) -->
     <androidx.constraintlayout.widget.Group
@@ -41,7 +40,7 @@
         android:padding="8dp"
         android:background="#F0F0F0"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/content"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -63,18 +62,28 @@
     </LinearLayout>
 
     <!-- Поле ввода текста -->
-    <EditText
-        android:id="@+id/content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/post_hint"
-        android:inputType="textMultiLine"
-        android:maxLines="4"
-        android:padding="12dp"
-        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/save"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post_hint"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:background="?attr/colorSurface"
+            android:textColorHint="?attr/colorOnSurfaceVariant" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <!-- Кнопка сохранения -->
     <ImageButton
