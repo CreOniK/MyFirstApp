@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.bisirkinmyfirstapp.databinding.CardPostBinding
 import com.example.bisirkinmyfirstapp.dto.Post
 
+
 class PostsAdapter(
     private val listener: OnPostInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
