@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         }
         override fun onEdit(post: Post) {
             viewModel.edit(post)
-            // Переводим фокус на поле ввода
+            //
             binding.content.requestFocus()
         }
         override fun onRemove(post: Post) {
