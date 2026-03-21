@@ -27,7 +27,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 1300000,
             shares = 25,
-            views = 5041245
+            views = 5041245,
+            video = "https://yandex.ru/video/preview/17658453747006452216"
         ),
         Post(
             id = 2,
@@ -38,7 +39,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = true,
             likes = 1450435,
             shares = 250000,
-            views = 1809434
+            views = 1809434,
+            video = null
+
         ),
         Post(
             id = 3,
@@ -49,18 +52,20 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 342345,
             shares = 89674,
-            views = 2300525
+            views = 2300525,
+            video = null
         ),
         Post(
             id = 4,
             author = "\uD83D\uDC80 Хорошее настроение гарантировано",
             authorId = 5,
-            content = "Кто сказал, что жизнь короткая? Она длится ровно столько, сколько мы успеваем насладиться её прелестями... ну и похоронить всех, кто мешает наслаждаться жизнью.",
+            content = "Кто  сказал, что жизнь короткая? Она длится ровно столько, сколько мы успеваем насладиться её прелестями... ну и похоронить всех, кто мешает наслаждаться жизнью.",
             published = "23 мая в 09:42",
             likedByMe = false,
             likes = 1250412,
             shares = 42032,
-            views = 2890054
+            views = 2890054,
+            video = null
         ),
         Post(
             id = 5,
@@ -71,7 +76,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 1250412,
             shares = 42032,
-            views = 2890054
+            views = 2890054,
+            video = null
         ),
         Post(
             id = 6,
@@ -82,7 +88,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = true,
             likes = 2450412,
             shares = 402032,
-            views = 2090054
+            views = 2090054,
+            video = null
         ),Post(
             id = 7,
             authorId = 8,
@@ -94,7 +101,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 2450412,
             shares = 402032,
-            views = 2090054
+            views = 2090054,
+            video = null
         ),Post(
             id = 8,
             authorId = 9,
@@ -106,7 +114,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 2450412,
             shares = 402032,
-            views = 2090054
+            views = 2090054,
+            video = null
         ),Post(
             id = 9,
             authorId = 10,
@@ -120,7 +129,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 2450412,
             shares = 402032,
-            views = 2090054
+            views = 2090054,
+            video = null
         ),
         Post(
             id = 10,
@@ -131,7 +141,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 567884,
             shares = 13452,
-            views = 2650000
+            views = 2650000,
+            video = null
         )
     )
 
@@ -174,7 +185,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
         }
         _data.value = posts
     }
-    override fun save(post: Post) {
+    override fun save(post: Post): Post {
         if (post.id == 0L) {
             // Создание нового поста
             val newPost = post.copy(
@@ -200,6 +211,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             }
         }
         _data.value = posts
+        return TODO("Provide the return value")
     }
 
     override fun removeById(id: Long) {
