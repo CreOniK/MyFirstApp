@@ -177,6 +177,5 @@ class DbHelper(context: Context) :
             putNull(Columns.VIDEO)
             db.insert(PostContract.TABLE_NAME, null, this)
         }
-
     }
 }

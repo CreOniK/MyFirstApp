@@ -105,16 +105,12 @@ class PostViewHolder(
 
         }
     }
-
     fun View.stopPropagation() {
         isClickable = true
         setOnClickListener {
             // пустой обработчик, чтобы перехватить событие
         }
     }
-
-
-
     private fun showPopupMenu(anchor: View, post: Post) {
         PopupMenu(anchor.context, anchor).apply {
             // Загружаем меню из ресурса
@@ -145,8 +141,9 @@ class PostViewHolder(
         val packageManager = itemView.context.packageManager
         val activities = packageManager.queryIntentActivities(intent, 0)
 
-        // Логируем результат
+        // Логируем результаt
         Log.d("VideoIntent", "queryIntentActivities: $activities")
+
 
         val resolveInfo = intent.resolveActivity(packageManager)
         Log.d("VideoIntent", "resolveActivity: $resolveInfo")

@@ -40,7 +40,6 @@ class NewPostFragment : Fragment() {
         _binding = FragmentNewPostBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.edited.observe(viewLifecycleOwner) { post ->

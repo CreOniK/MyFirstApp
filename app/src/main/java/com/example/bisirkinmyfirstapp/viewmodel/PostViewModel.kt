@@ -20,7 +20,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     private val _draft = MutableLiveData("")
     val draft: LiveData<String> = _draft
 
-
     val data: LiveData<List<Post>> = repository.getAll()
 
     fun saveDraft(text: String) {
