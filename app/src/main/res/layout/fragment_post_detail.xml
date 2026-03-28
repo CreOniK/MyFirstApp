@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_margin="5dp"
+    android:elevation="8dp"
+    android:background="@drawable/rounded_bg"
     tools:context=".fragment.PostDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +22,13 @@
             android:contentDescription="@string/avatar_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/avatars" />
+            android:src="@drawable/avatars"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/shape_circle"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.AppTheme.Circle"
+            tools:ignore="UnusedAttribute"/>
 
         <TextView
             android:id="@+id/author"
